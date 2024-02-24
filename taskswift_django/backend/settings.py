@@ -1,5 +1,6 @@
 # type: ignore
 import os
+import sys
 from typing import List
 
 from dotenv import load_dotenv
@@ -23,9 +24,9 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+APP_DIR = "apps"
 
-APP_PREFIX = "apps"
-APP_DIR = BASE_DIR / APP_PREFIX
+sys.path.append(str(BASE_DIR / APP_DIR))
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,18 +38,25 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG")
 
-ALLOWED_HOSTS = []
+AUTH_USER_MODEL = "accounts.User"
 
-# JET_INDEX_DASHBOARD = "dashboard.CustomIndexDashboard"
+PHONENUMBER_DEFAULT_REGION = "RU"  # Код страны по стандарту ISO 3166-1 для валидации номера телефона
+
+
+ALLOWED_HOSTS = []
 
 # Application definition
 THIRD_PARTY_APPS: List[str] = [
     "rest_framework",
     "jet.dashboard",
     "jet",  # Современная админ панель
+    "phonenumber_field",  # Валидация телефонных номеров
 ]
 
-FIRST_PARTY_APPS: List[str] = []
+FIRST_PARTY_APPS: List[str] = [
+    "tasks",
+    "accounts",
+]
 
 DJANGO_APPS: List[str] = [
     "django.contrib.admin",
@@ -70,6 +78,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
 
 ROOT_URLCONF = "backend.urls"
 
