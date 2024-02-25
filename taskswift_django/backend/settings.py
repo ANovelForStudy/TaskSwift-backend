@@ -38,7 +38,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG")
 
-AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 PHONENUMBER_DEFAULT_REGION = "RU"  # Код страны по стандарту ISO 3166-1 для валидации номера телефона
 
@@ -48,9 +48,10 @@ ALLOWED_HOSTS = []
 # Application definition
 THIRD_PARTY_APPS: List[str] = [
     "rest_framework",
-    "jet.dashboard",
-    "jet",  # Современная админ панель
-    "phonenumber_field",  # Валидация телефонных номеров
+    # "jet.dashboard",
+    # "jet",  # Современная админ панель
+    "phonenumber_field",  # Валидация и хранение телефонных номеров
+    "colorfield",  # Хранение цветов
 ]
 
 FIRST_PARTY_APPS: List[str] = [

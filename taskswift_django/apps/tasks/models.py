@@ -1,26 +1,109 @@
+from accounts.models import Employee
+from colorfield.fields import ColorField
 from django.db import models
 
 
+class TaskCategory(models.Model):
+    """Модель категории для задач"""
+
+    name = models.CharField(
+        max_length=100,
+        verbose_name="Название категории",
+    )
+
+    description = models.TextField(
+        verbose_name="Описание категории",
+        blank=True,
+    )
+
+    color = ColorField(
+        default="#FFFFFF",
+        verbose_name="Цвет для категории",
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата создания",
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Дата последнего обновления",
+    )
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        verbose_name = "категория задач"
+        verbose_name_plural = "категории задач"
+
+
 class Task(models.Model):
+    """Модель задачи"""
+
     class Priority(models.TextChoices):
         LOW = "L", "Низкий"
         MEDIUM = "M", "Средний"
         HIGH = "H", "Высокий"
         UNDEFINED = "U", "Не определён"
 
-    title = models.CharField(max_length=255)
-    description = models.TextField()
+    title = models.CharField(
+        max_length=255,
+        verbose_name="Название задачи",
+    )
 
-    # category = models.CharField(null=True, blank=True)
+    description = models.TextField(
+        verbose_name="Описание задачи",
+        blank=True,
+    )
 
-    # assigned_to = models.ForeignKey()
+    priority = models.CharField(
+        max_length=2,
+        choices=Priority.choices,
+        default=Priority.UNDEFINED,
+        verbose_name="Приоритет задачи",
+    )
 
-    # created_at = models.DateTimeField(auto_now_add=True)
-    # deadline = models.DateTimeField(null=True, blank=True)
+    color = ColorField(
+        default="#FFFFFF",
+        verbose_name="Цвет для задачи",
+    )
 
-    priority = models.CharField(max_length=2, choices=Priority.choices, default=Priority.UNDEFINED)
+    category = models.ForeignKey(
+        TaskCategory,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Категория задачи",
+    )
 
-    def __str__(self):
+    assigned_to = models.ForeignKey(
+        Employee,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Исполнитель задачи",
+        help_text="Кому задача назначена для выполнения",
+    )
+
+    deadline = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name="Дедлайн (крайний срок)",
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата создания",
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Дата последнего обновления",
+    )
+
+    def __str__(self) -> str:
         return self.title
 
     class Meta:
