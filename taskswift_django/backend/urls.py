@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path("", include("accounts.urls")),
+    # path("", include("accounts.urls")),
+    path("api/", include("api.urls")),
+    path("api/v1/tasks/", include("tasks.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     # Jet админ панель
     # path("jet/", include("jet.urls", "jet")),  # Django JET URLS

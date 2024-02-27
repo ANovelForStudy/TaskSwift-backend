@@ -42,6 +42,35 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 
 PHONENUMBER_DEFAULT_REGION = "RU"  # Код страны по стандарту ISO 3166-1 для валидации номера телефона
 
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+)
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
 
 ALLOWED_HOSTS = []
 
@@ -52,11 +81,13 @@ THIRD_PARTY_APPS: List[str] = [
     # "jet",  # Современная админ панель
     "phonenumber_field",  # Валидация и хранение телефонных номеров
     "colorfield",  # Хранение цветов
+    "corsheaders",
 ]
 
 FIRST_PARTY_APPS: List[str] = [
     "tasks",
     "accounts",
+    "api",
 ]
 
 DJANGO_APPS: List[str] = [
@@ -73,6 +104,7 @@ INSTALLED_APPS = FIRST_PARTY_APPS + THIRD_PARTY_APPS + DJANGO_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
