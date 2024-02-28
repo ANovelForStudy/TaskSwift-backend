@@ -1,24 +1,14 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 from tasks.models import Task, TaskCategory
 
 from .serializers import TaskCategorySerializer, TaskSerializer
 
 
-class TaskListCreateAPIView(ListCreateAPIView):
+class TaskViewSet(ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
 
-class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-
-
-class TaskCategoryListCreateAPIView(ListCreateAPIView):
-    queryset = TaskCategory.objects.all()
-    serializer_class = TaskCategorySerializer
-
-
-class TaskCategoryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+class TaskCategoryViewSet(ModelViewSet):
     queryset = TaskCategory.objects.all()
     serializer_class = TaskCategorySerializer
