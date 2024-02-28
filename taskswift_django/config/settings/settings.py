@@ -23,7 +23,7 @@ load_dotenv()
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 APP_DIR = "apps"
 
 sys.path.append(str(BASE_DIR / APP_DIR))
@@ -38,7 +38,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG")
 
-AUTH_USER_MODEL = "accounts.CustomUser"
+AUTH_USER_MODEL = "users.CustomUser"
 
 PHONENUMBER_DEFAULT_REGION = "RU"  # Код страны по стандарту ISO 3166-1 для валидации номера телефона
 
@@ -86,7 +86,7 @@ THIRD_PARTY_APPS: List[str] = [
 
 FIRST_PARTY_APPS: List[str] = [
     "tasks",
-    "accounts",
+    "users",
     "api",
 ]
 

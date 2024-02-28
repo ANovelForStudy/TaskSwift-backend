@@ -1,6 +1,6 @@
-from accounts.models import Employee
 from colorfield.fields import ColorField
 from django.db import models
+from users.models import Employee
 
 
 class TaskCategory(models.Model):
