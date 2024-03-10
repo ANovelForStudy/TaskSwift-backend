@@ -1,6 +1,7 @@
 from colorfield.fields import ColorField
 from django.db import models
-from users.models import Employee
+
+from users.models import CustomUser, Employee
 
 
 class TaskCategory(models.Model):
@@ -79,12 +80,18 @@ class Task(models.Model):
     )
 
     assigned_to = models.ForeignKey(
-        Employee,
+        CustomUser,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         verbose_name="Исполнитель задачи",
         help_text="Кому задача назначена для выполнения",
+    )
+
+    is_completed = models.BooleanField(
+        default=False,
+        verbose_name="Задача выполнена",
+        help_text="Статус выполнения задачи",
     )
 
     deadline = models.DateTimeField(

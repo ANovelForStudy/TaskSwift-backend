@@ -14,17 +14,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    # path("", include("users.urls")),
+    # --------------------------------------------
+    # Djoser
+    # --------------------------------------------
+    path("api/v1/auth/", include("djoser.urls")),
+    path("api/v1/auth/", include("djoser.urls.authtoken")),
+    # --------------------------------------------
+    # Приложения
+    # --------------------------------------------
     path("api/v1/", include("api.urls")),
-    path("api/v1/tasks/", include("tasks.urls")),
-    path("accounts/", include("django.contrib.auth.urls")),
+    # --------------------------------------------
     # Jet админ панель
-    # path("jet/", include("jet.urls", "jet")),  # Django JET URLS
-    # path("jet/dashboard/", include("jet.dashboard.urls", "jet-dashboard")),  # Django JET dashboard URLS
+    # --------------------------------------------
+    path("jet/", include("jet.urls", "jet")),  # Django JET URLS
+    path("jet/dashboard/", include("jet.dashboard.urls", "jet-dashboard")),  # Django JET dashboard URLS
+    # --------------------------------------------
     # Стандартные представления
+    # --------------------------------------------
+    # path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
 ]

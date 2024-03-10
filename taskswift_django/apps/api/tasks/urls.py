@@ -1,5 +1,6 @@
-from api.tasks import views
 from django.urls import path
+
+from api.tasks import views
 
 task_urls = [
     # Получение всех записей о задачах и создание новой задачи
@@ -25,6 +26,24 @@ task_urls = [
             }
         ),
         name="task_detail",
+    ),
+    path(
+        "<int:pk>/toggle_completion/",
+        views.TaskViewSet.as_view(
+            {
+                "post": "toggle_completion",
+            }
+        ),
+        name="toggle_task_completion",
+    ),
+    path(
+        "assigned-to-me/",
+        views.TaskViewSet.as_view(
+            {
+                "get": "assigned_to_me",
+            }
+        ),
+        name="assigned_to_me",
     ),
 ]
 

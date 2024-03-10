@@ -8,7 +8,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class CustomUserManager(UserManager):
     """Пользовательский UserManager для кастомизированной модели CustomUser"""
 
-    use_in_migrations = True
+    # use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
         email = self.normalize_email(email)
@@ -50,37 +50,42 @@ class CustomUser(AbstractUser):
         ("F", "Женский"),
     ]
 
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    # Назначение кастомизированного UserManager
+    objects = CustomUserManager()
+
     # Отказ от использования username в пользу использования email
     username = None
 
     first_name = models.CharField(
         max_length=150,
-        blank=True,
         verbose_name="Имя",
     )
 
-    # middlename = models.CharField(
-    #     max_length=150,
-    #     blank=True,
-    #     verbose_name="Отчество",
-    # )
+    middle_name = models.CharField(
+        max_length=150,
+        blank=True,
+        verbose_name="Отчество",
+    )
 
     last_name = models.CharField(
         max_length=150,
-        blank=True,
         verbose_name="Фамилия",
     )
 
     email = models.EmailField(unique=True)
 
     user_type = models.CharField(
-        default=1,
+        default="1",
         choices=UserType.choices,
         max_length=1,
         verbose_name="Тип пользователя",
     )
 
     gender = models.CharField(
+        blank=True,
         max_length=1,
         choices=GENDER,
         verbose_name="Пол",
@@ -93,6 +98,7 @@ class CustomUser(AbstractUser):
 
     phone = PhoneNumberField(
         blank=True,
+        null=True,
         unique=True,
         verbose_name="Номер телефона",
     )
@@ -151,12 +157,6 @@ class CustomUser(AbstractUser):
         auto_now=True,
         verbose_name="Дата последнего обновления",
     )
-
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
-
-    # Назначение кастомизированного UserManager
-    objects = CustomUserManager()
 
     def __str__(self) -> str:
         return f"{self.last_name}, {self.first_name}"
