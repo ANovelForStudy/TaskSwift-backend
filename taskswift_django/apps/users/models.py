@@ -144,6 +144,7 @@ class CustomUser(AbstractUser):
     )
 
     profile_picture = models.ImageField(
+        null=True,
         blank=True,
         verbose_name="Фотография профиля",
     )

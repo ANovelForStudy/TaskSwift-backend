@@ -154,6 +154,13 @@ DJOSER = {
         "user_create": "api.users.serializers.UserRegistrationSerializer",
         "user": "api.users.serializers.UserSerializer",
         "current_user": "api.users.serializers.UserSerializer",
+        "user_delete": "djoser.serializers.UserDeleteSerializer",
+    },
+    "PERMISSIONS": {
+        "user": ["rest_framework.permissions.AllowAny"],
+        "user_list": ["rest_framework.permissions.AllowAny"],
+        "current_user": ["rest_framework.permissions.IsAuthenticated"],
+        "user_delete": ["rest_framework.permissions.IsAuthenticated"],
     },
 }
 
